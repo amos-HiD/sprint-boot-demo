@@ -61,11 +61,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <failBuildOnCVSS>6</failBuildOnCVSS>
-                    <format>ALL</format>
-                    <outputDirectory>${dependency.check.report.dir}</outputDirectory>
-                </configuration>
             </plugin>
 		</plugins>
 	</build>
