@@ -48,6 +48,25 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>1.2.8</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <failBuildOnCVSS>6</failBuildOnCVSS>
+                    <format>ALL</format>
+                    <outputDirectory>${dependency.check.report.dir}</outputDirectory>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
