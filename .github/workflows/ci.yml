@@ -30,7 +30,7 @@ jobs:
         
     - name: Build parent
       run: |
-        mvn clean package
+        mvn --no-transfer-progress clean package
 
   owasp-scan:
     runs-on: ubuntu-latest
