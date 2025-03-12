@@ -39,6 +39,6 @@ jobs:
     - name: Security OWASP to check for vulnerabilities
       id: scan
       run: |
-        mvn org.owasp:dependency-check-maven:check
+        mvn --no-transfer-progress clean package -DskipTests -DnvdApiKey=${{secrets.NVD_KEY}} org.owasp:dependency-check-maven:check
     # mvn clean install -Dms1.stage=development -Ddependency-check.skip=true -U --no-transfer-progress
 
