@@ -36,16 +36,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Security OWASP to check for vulnerabilities
+    - name: Security OWASP to check for vulnerabilities    
       id: scan
       run: |
         mvn --no-transfer-progress clean package -DskipTests -DnvdApiKey=${{secrets.NVD_KEY}} org.owasp:dependency-check-maven:check
 
-
     - name: Dependency reports upload
       uses: actions/upload-artifact@v4
       with:
-        name: code-coverage-report
-        path: output/reports/dependency-check-report.html
+        name: owasp-dependency-report
+        path: target/reports/dependency-check-report.html
 
 # mvn clean install -Dms1.stage=development -Ddependency-check.skip=true -U --no-transfer-progress
