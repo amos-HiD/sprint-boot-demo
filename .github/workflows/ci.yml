@@ -40,4 +40,12 @@ jobs:
       id: scan
       run: |
         mvn --no-transfer-progress clean package -DskipTests -DnvdApiKey=${{secrets.NVD_KEY}} org.owasp:dependency-check-maven:check
-    # mvn clean install -Dms1.stage=development -Ddependency-check.skip=true -U --no-transfer-progress
+
+
+    - name: Dependency reports upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-coverage-report
+        path: output/reports/dependency-check-report.html
+
+# mvn clean install -Dms1.stage=development -Ddependency-check.skip=true -U --no-transfer-progress
