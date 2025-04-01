@@ -46,7 +46,7 @@ set_java_home() {
   # For Cygwin and MinGW, ensure paths are in Unix format before anything is touched
   if [ -n "${JAVA_HOME-}" ]; then
     if [ -x "$JAVA_HOME/jre/sh/java" ]; then
-      # IBM's JDK on AIX uses strange locations for the executables
+      # IBM"s JDK on AIX uses strange locations for the executables
       JAVACMD="$JAVA_HOME/jre/sh/java"
       JAVACCMD="$JAVA_HOME/jre/sh/javac"
     else
@@ -61,14 +61,14 @@ set_java_home() {
     fi
   else
     JAVACMD="$(
-      'set' +e
-      'unset' -f command 2>/dev/null
-      'command' -v java
+      "set" +e
+      "unset" -f command 2>/dev/null
+      "command" -v java
     )" || :
     JAVACCMD="$(
-      'set' +e
-      'unset' -f command 2>/dev/null
-      'command' -v javac
+      "set" +e
+      "unset" -f command 2>/dev/null
+      "command" -v javac
     )" || :
 
     if [ ! -x "${JAVACMD-}" ] || [ ! -x "${JAVACCMD-}" ]; then
@@ -83,7 +83,7 @@ hash_string() {
   str="${1:-}" h=0
   while [ -n "$str" ]; do
     char="${str%"${str#?}"}"
-    h=$(((h * 31 + $(LC_CTYPE=C printf %d "'$char")) % 4294967296))
+    h=$(((h * 31 + $(LC_CTYPE=C printf %d ""$char")) % 4294967296))
     str="${str#?}"
   done
   printf %x\\n $h
@@ -102,7 +102,7 @@ trim() {
   #   Trims trailing and leading whitespace, carriage returns, tabs, and linefeeds.
   #   Needed for removing poorly interpreted newline sequences when running in more
   #   exotic environments such as mingw bash on Windows.
-  printf "%s" "${1}" | tr -d '[:space:]'
+  printf "%s" "${1}" | tr -d "[:space:]"
 }
 
 # parse distributionUrl and optional distributionSha256Sum, requires .mvn/wrapper/maven-wrapper.properties
@@ -154,7 +154,7 @@ fi
 
 case "${distributionUrl-}" in
 *?-bin.zip | *?maven-mvnd-?*-?*.zip) ;;
-*) die "distributionUrl is not valid, must match *-bin.zip or maven-mvnd-*.zip, but found '${distributionUrl-}'" ;;
+*) die "distributionUrl is not valid, must match *-bin.zip or maven-mvnd-*.zip, but found "${distributionUrl-}"" ;;
 esac
 
 # prepare tmp dir
@@ -168,7 +168,7 @@ fi
 mkdir -p -- "${MAVEN_HOME%/*}"
 
 # Download and Install Apache Maven
-verbose "Couldn't find MAVEN_HOME, downloading and installing it ..."
+verbose "Couldn"t find MAVEN_HOME, downloading and installing it ..."
 verbose "Downloading from: $distributionUrl"
 verbose "Downloading to: $TMP_DOWNLOAD_DIR/$distributionUrlName"
 
@@ -179,13 +179,13 @@ if ! command -v unzip >/dev/null; then
 fi
 
 # verbose opt
-__MVNW_QUIET_WGET=--quiet __MVNW_QUIET_CURL=--silent __MVNW_QUIET_UNZIP=-q __MVNW_QUIET_TAR=''
-[ "${MVNW_VERBOSE-}" != true ] || __MVNW_QUIET_WGET='' __MVNW_QUIET_CURL='' __MVNW_QUIET_UNZIP='' __MVNW_QUIET_TAR=v
+__MVNW_QUIET_WGET=--quiet __MVNW_QUIET_CURL=--silent __MVNW_QUIET_UNZIP=-q __MVNW_QUIET_TAR=""
+[ "${MVNW_VERBOSE-}" != true ] || __MVNW_QUIET_WGET="" __MVNW_QUIET_CURL="" __MVNW_QUIET_UNZIP="" __MVNW_QUIET_TAR=v
 
 # normalize http auth
 case "${MVNW_PASSWORD:+has-password}" in
-'') MVNW_USERNAME='' MVNW_PASSWORD='' ;;
-has-password) [ -n "${MVNW_USERNAME-}" ] || MVNW_USERNAME='' MVNW_PASSWORD='' ;;
+"") MVNW_USERNAME="" MVNW_PASSWORD="" ;;
+has-password) [ -n "${MVNW_USERNAME-}" ] || MVNW_USERNAME="" MVNW_PASSWORD="" ;;
 esac
 
 if [ -z "${MVNW_USERNAME-}" ] && command -v wget >/dev/null; then
@@ -224,7 +224,7 @@ if [ -n "${distributionSha256Sum-}" ]; then
   distributionSha256Result=false
   if [ "$MVN_CMD" = mvnd.sh ]; then
     echo "Checksum validation is not supported for maven-mvnd." >&2
-    echo "Please disable validation by removing 'distributionSha256Sum' from your maven-wrapper.properties." >&2
+    echo "Please disable validation by removing "distributionSha256Sum" from your maven-wrapper.properties." >&2
     exit 1
   elif command -v sha256sum >/dev/null; then
     if echo "$distributionSha256Sum  $TMP_DOWNLOAD_DIR/$distributionUrlName" | sha256sum -c >/dev/null 2>&1; then
@@ -235,8 +235,8 @@ if [ -n "${distributionSha256Sum-}" ]; then
       distributionSha256Result=true
     fi
   else
-    echo "Checksum validation was requested but neither 'sha256sum' or 'shasum' are available." >&2
-    echo "Please install either command, or disable validation by removing 'distributionSha256Sum' from your maven-wrapper.properties." >&2
+    echo "Checksum validation was requested but neither "sha256sum" or "shasum" are available." >&2
+    echo "Please install either command, or disable validation by removing "distributionSha256Sum" from your maven-wrapper.properties." >&2
     exit 1
   fi
   if [ $distributionSha256Result = false ]; then
