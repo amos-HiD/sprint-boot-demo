@@ -45,6 +45,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: owasp-dependency-report
-        path: target/reports/dependency-check-report.html
+        path: /home/runner/work/sprint-boot-demo/sprint-boot-demo/target/dependency-check-report.html
 
 # mvn clean install -Dms1.stage=development -Ddependency-check.skip=true -U --no-transfer-progress
